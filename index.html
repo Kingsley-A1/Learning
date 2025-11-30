@@ -2,38 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOODEALS Genius | Strategic Implementation Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>King Learn | Master Your Craft</title>
+    <!-- SEO & Social -->
+    <meta name="description" content="King Learn — A simple, focused learning tracker to build consistent study streaks, track progress and store certificates locally.">
+    <meta name="theme-color" content="#0F172A">
+    <meta property="og:title" content="King Learn | Master Your Craft">
+    <meta property="og:description" content="Track your learning, log progress, and earn certificates. Lightweight and privacy-first.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="King Learn">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="favicon.ico">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
-    <!-- Chosen Palette: Warm Professional
-         Backgrounds: Warm Neutrals (Stone-50, Orange-50)
-         Text: Slate-800, Gray-600
-         Accents: GOODEALS Orange (Orange-500), Trust Blue (Blue-600), Success Green (Emerald-500)
-    -->
+    <!-- Tailwind CSS (CDN for quick dev; prefer compiled CSS for production) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        brand: {
-                            orange: '#f97316', // Orange-500
-                            dark: '#1e293b',   // Slate-800
-                            light: '#fafaf9',  // Stone-50
-                            accent: '#3b82f6', // Blue-500
-                        }
-                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        king: {
+                            gold: '#FFD700',
+                            dark: '#0F172A', // Slate 900
+                            primary: '#6366f1', // Indigo 500
+                            surface: '#1E293B', // Slate 800
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Icons (Phosphor) -->
+    <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Toastify for Notifications -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script defer>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        king: {
+                            gold: '#FFD700',
+                            dark: '#0F172A', // Slate 900
+                            primary: '#6366f1', // Indigo 500
+                            surface: '#1E293B', // Slate 800
+                        }
                     }
                 }
             }
@@ -41,699 +72,878 @@
     </script>
 
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
+        .input-field {
+            background: #334155;
+            border: 1px solid #475569;
+            color: white;
+            transition: all 0.2s;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+        .input-field:focus {
+            border-color: #6366f1;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.06);
         }
-
-        /* Chart Container Utilities */
+        /* Chart container constraint */
         .chart-container {
-            position: relative;
+            position: relative; 
+            height: 300px; 
             width: 100%;
-            max-width: 100%; 
-            height: 300px;
-            margin: 0 auto;
         }
-        
-        @media (min-width: 1024px) {
-            .chart-container {
-                height: 350px;
-            }
+        /* Hide scrollbar for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-
-        /* Smooth Transitions */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.3s ease-out;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .nav-item.active {
-            background-color: #fff7ed; /* Orange-50 */
-            color: #c2410c; /* Orange-700 */
-            border-right: 3px solid #f97316;
-        }
     </style>
 </head>
-<body class="bg-stone-50 text-slate-800 font-sans antialiased h-screen flex overflow-hidden">
+<body class="h-screen flex flex-col overflow-hidden">
 
-    <!-- Application Structure Plan:
-         - Sidebar Navigation: Permanent access to key report sections (Dashboard, Strategy, Architecture, Execution, Safety).
-         - Main Content Area: Dynamic container managed by JS state.
-         - Dashboard: High-level summary, North Star metrics (Counters), Readiness Gauge (Doughnut Chart).
-         - Strategy: Interactive Role Cards (Buyer, Vendor, etc.) showing specific AI outcomes.
-         - Architecture: Split view for Backend Pillars and Frontend UX Principles using grid layouts.
-         - Execution: Interactive Timeline (Bar Chart as Gantt) for Waves and Sprints.
-         - Safety: Visual breakdown of Prompt Engineering and Incident Response.
-         - Rationale: The source report is dense with planning data. A dashboard approach breaks this into consumable "views" catering to different stakeholders (Execs check Dashboard, Devs check Architecture/Execution).
-    -->
-
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-stone-200 flex flex-col shadow-sm z-10 hidden md:flex">
-        <div class="p-6 border-b border-stone-100 flex items-center gap-3">
-            <div class="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-white font-bold text-lg">G</div>
-            <h1 class="font-serif text-xl font-bold text-slate-800 tracking-tight">Genius Hub</h1>
-        </div>
-
-        <nav class="flex-1 overflow-y-auto py-4">
-            <ul class="space-y-1">
-                <li>
-                    <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-stone-50 hover:text-brand-orange transition-colors flex items-center gap-3 active">
-                        <span>📊</span> Dashboard
-                    </button>
-                </li>
-                <li>
-                    <button onclick="navigateTo('strategy')" id="nav-strategy" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-stone-50 hover:text-brand-orange transition-colors flex items-center gap-3">
-                        <span>🎯</span> Strategy & Roles
-                    </button>
-                </li>
-                <li>
-                    <button onclick="navigateTo('architecture')" id="nav-architecture" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-stone-50 hover:text-brand-orange transition-colors flex items-center gap-3">
-                        <span>🏗️</span> Architecture
-                    </button>
-                </li>
-                <li>
-                    <button onclick="navigateTo('execution')" id="nav-execution" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-stone-50 hover:text-brand-orange transition-colors flex items-center gap-3">
-                        <span>🚀</span> Execution Roadmap
-                    </button>
-                </li>
-                <li>
-                    <button onclick="navigateTo('safety')" id="nav-safety" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-stone-50 hover:text-brand-orange transition-colors flex items-center gap-3">
-                        <span>🛡️</span> Safety & Alignment
-                    </button>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="p-4 border-t border-stone-100">
-            <div class="bg-blue-50 rounded-lg p-3 text-xs text-blue-700">
-                <p class="font-semibold mb-1">Status: Planning Phase</p>
-                <p>Version 1.0</p>
+    <!-- Top Navigation -->
+    <header class="h-16 border-b border-slate-800 flex items-center justify-between px-4 md:px-6 bg-king-dark z-20 shrink-0" role="banner">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="app.navigate('dashboard')">
+            <div class="w-10 h-10 bg-gradient-to-br from-king-gold to-yellow-600 rounded-lg flex items-center justify-center text-king-dark font-bold text-xl shadow-lg shadow-yellow-900/20">
+                <i class="ph-fill ph-crown"></i>
+            </div>
+            <div>
+                <h1 class="font-display font-bold text-xl tracking-tight text-white">King Learn</h1>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold hidden md:block">Mastery & Progress</p>
             </div>
         </div>
-    </aside>
-
-    <!-- Mobile Header -->
-    <div class="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-stone-200 p-4 z-20 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-6 h-6 bg-brand-orange rounded flex items-center justify-center text-white font-bold text-sm">G</div>
-            <span class="font-serif font-bold text-slate-800">Genius Hub</span>
-        </div>
-        <button onclick="toggleMobileMenu()" class="text-slate-600 focus:outline-none">
-            ☰
-        </button>
-    </div>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden" onclick="toggleMobileMenu()">
-        <div class="bg-white w-64 h-full shadow-lg p-4" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-6">
-                <span class="font-bold text-lg">Menu</span>
-                <button onclick="toggleMobileMenu()" class="text-slate-500">✕</button>
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">
+                <i class="ph-fill ph-fire text-orange-500"></i>
+                <span class="text-sm font-medium" id="streak-display">0 Day Streak</span>
             </div>
-            <nav class="space-y-2">
-                <button onclick="navigateTo('dashboard'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-orange-50 text-slate-700">Dashboard</button>
-                <button onclick="navigateTo('strategy'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-orange-50 text-slate-700">Strategy</button>
-                <button onclick="navigateTo('architecture'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-orange-50 text-slate-700">Architecture</button>
-                <button onclick="navigateTo('execution'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-orange-50 text-slate-700">Execution</button>
-                <button onclick="navigateTo('safety'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-orange-50 text-slate-700">Safety</button>
+            <!-- Settings / Profile Trigger (Mock) -->
+            <button onclick="Toastify({text: 'Profile Settings coming soon!', duration: 2000, style: {background: '#334155'}}).showToast()" class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-500 transition-colors">
+                <i class="ph-bold ph-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex-1 flex overflow-hidden relative">
+        
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden md:flex w-64 flex-col border-r border-slate-800 bg-king-dark/50 backdrop-blur-sm z-10 shrink-0" role="navigation" aria-label="Main Navigation">
+            <nav class="flex-1 p-4 space-y-2">
+                <button onclick="app.navigate('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all active-nav" data-target="dashboard">
+                    <i class="ph-duotone ph-squares-four text-xl"></i>
+                    <span class="font-medium">Dashboard</span>
+                </button>
+                <button onclick="app.navigate('courses')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all" data-target="courses">
+                    <i class="ph-duotone ph-books text-xl"></i>
+                    <span class="font-medium">My Courses</span>
+                </button>
+                <button onclick="app.navigate('analytics')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all" data-target="analytics">
+                    <i class="ph-duotone ph-chart-line-up text-xl"></i>
+                    <span class="font-medium">Analytics</span>
+                </button>
             </nav>
-        </div>
+            <div class="p-4 border-t border-slate-800">
+                <button onclick="app.showModal('add-course-modal')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-medium flex items-center justify-center gap-2 shadow-lg shadow-indigo-900/20 transition-all transform hover:scale-[1.02]">
+                    <i class="ph-bold ph-plus"></i>
+                    <span>New Course</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto relative bg-gradient-to-br from-king-dark to-slate-900 p-4 md:p-8 pb-24 md:pb-8" id="main-view" role="main">
+            <!-- Views will be injected here -->
+        </main>
+
     </div>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-8 mt-14 md:mt-0 relative" id="main-content">
-        <!-- Views will be injected here by JS -->
-    </main>
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex justify-around items-center px-2 z-40 pb-safe">
+        <button onclick="app.navigate('dashboard')" class="nav-btn-mobile flex flex-col items-center gap-1 p-2 text-indigo-400 transition-colors" data-target="dashboard">
+            <i class="ph-duotone ph-squares-four text-2xl"></i>
+            <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <button onclick="app.showModal('add-course-modal')" class="flex flex-col items-center justify-center -mt-8">
+            <div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 border-4 border-slate-900 transform active:scale-95 transition-transform">
+                <i class="ph-bold ph-plus text-2xl"></i>
+            </div>
+        </button>
+        <button onclick="app.navigate('analytics')" class="nav-btn-mobile flex flex-col items-center gap-1 p-2 text-slate-500 transition-colors" data-target="analytics">
+            <i class="ph-duotone ph-chart-bar text-2xl"></i>
+            <span class="text-[10px] font-medium">Stats</span>
+        </button>
+    </nav>
 
-    <!-- Visualization & Content Choices:
-         1. Dashboard: 
-            - Goal: Immediate situational awareness of the project's goals and health.
-            - Viz: "North Star" metrics displayed as large, clean numbers. Doughnut chart for Readiness Gate status (Visualizing the checklist).
-         2. Strategy:
-            - Goal: Explain complex multi-role benefits clearly.
-            - Viz: Interactive Grid Cards. Hover/Click to reveal specific "Strategic Outcomes" for Buyer, Vendor, etc.
-         3. Execution:
-            - Goal: Show the timeline of Waves (Backend) and Sprints (Frontend).
-            - Viz: Chart.js Horizontal Bar chart to simulate a Gantt chart. Colors differentiate Backend vs Frontend.
-         4. Architecture:
-            - Goal: Break down dense technical pillars.
-            - Viz: HTML Grid layout with iconography for pillars.
-    -->
+    <!-- MODALS -->
 
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
-    <script>
-        // --- Data Store ---
-        const reportData = {
-            northStars: [
-                { label: "Conversion Uplift", value: 18, suffix: "%", desc: "Product discovery to add-to-cart" },
-                { label: "Support Latency", value: -25, suffix: "%", desc: "First-response reduction via AI" },
-                { label: "Pricing Accuracy", value: 12, suffix: "%", desc: "Vendor pricing vs benchmark" },
-                { label: "Affiliate CTR", value: 20, suffix: "%", desc: "AI-curated bundle clicks" },
-                { label: "Safety Score", value: 99, suffix: "%", desc: "Audited safe responses" }
-            ],
-            readiness: {
-                pass: 6,
-                total: 6,
-                items: [
-                    "Latency p95 < 2.5s",
-                    "Hallucination audit pass (>=98%)",
-                    "Security pen test findings resolved",
-                    "Support escalation pipeline functioning",
-                    "Cost / session within budget",
-                    "Data retention & purge validated"
-                ]
-            },
-            roles: [
-                {
-                    title: "Buyer",
-                    icon: "🛒",
-                    outcome: "Confidence & Clarity",
-                    details: "Collapse friction from discovery → decision. 24/7 shopping assistant that understands cultural context."
-                },
-                {
-                    title: "Vendor",
-                    icon: "🏪",
-                    outcome: "Competence & Growth",
-                    details: "Pricing guidance, catalog optimization, and fulfillment insights to boost margins."
-                },
-                {
-                    title: "Affiliate",
-                    icon: "📢",
-                    outcome: "Persuasion & Reach",
-                    details: "Data-backed recommendation bundles to increase click-through rates."
-                },
-                {
-                    title: "Admin",
-                    icon: "🛡️",
-                    outcome: "Insight & Safety",
-                    details: "Anomaly detection, operational risks surfacing, and hallucination monitoring."
-                }
-            ],
-            roadmap: {
-                backend: [
-                    { name: "Wave 1: Core Skeleton", duration: 2, start: 0 },
-                    { name: "Wave 2: Product Discovery", duration: 2, start: 2 },
-                    { name: "Wave 3: Pricing & Personalization", duration: 2, start: 4 },
-                    { name: "Wave 4: Safety Hardening", duration: 1, start: 6 },
-                    { name: "Wave 5: Catalog Advisor", duration: 1, start: 7 }
-                ],
-                frontend: [
-                    { name: "Sprint 1: Chat UI & Telemetry", duration: 2, start: 1 }, // Staggered start
-                    { name: "Sprint 2: Product Discovery UI", duration: 2, start: 3 },
-                    { name: "Sprint 3: Pricing Assist Widget", duration: 2, start: 5 },
-                    { name: "Sprint 4: Memory & Audit", duration: 1, start: 7 },
-                    { name: "Sprint 5: Affiliate Tools", duration: 1, start: 8 }
-                ]
-            },
-            backendPillars: [
-                { title: "Modularity", desc: "Dedicated AiModule with clear sub-domains (ingest, retrieval, inference)." },
-                { title: "Observability", desc: "Structured tracing, metrics aggregation, cost tracking." },
-                { title: "Determinism", desc: "Versioned prompt templates & reproducible retrieval queries." },
-                { title: "Safety", desc: "Multi-layer filters: input sanitation, visibility filtering, output classifier." },
-                { title: "Performance", desc: "Caching embeddings, streaming responses, parallel retrieval." },
-                { title: "Extensibility", desc: "Register new capabilities via CapabilityProvider interface." }
-            ],
-            uxPrinciples: [
-                { title: "Low Friction", desc: "One-click summon & inline smart suggestions." },
-                { title: "Transparency", desc: "Source citations tooltip for every AI claim." },
-                { title: "Control", desc: "Clear user memory reset & opt-out toggles." },
-                { title: "Progress", desc: "Streaming token animation & skeleton loaders." },
-                { title: "Safety", desc: "Visually distinct escalation notices." }
-            ]
-        };
-
-        // --- State Management ---
-        let currentState = 'dashboard';
-
-        // --- Core Logic ---
-
-        function init() {
-            navigateTo('dashboard');
-        }
-
-        function navigateTo(viewId) {
-            currentState = viewId;
+    <!-- Add Course Modal -->
+    <div id="add-course-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="add-course-title">
+        <div class="glass-panel w-full max-w-lg rounded-2xl p-6 shadow-2xl transform scale-100 transition-all max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="add-course-title" class="text-2xl font-display font-bold text-white">Register New Course</h2>
+                <button onclick="app.hideModal('add-course-modal')" class="text-slate-400 hover:text-white"><i class="ph-bold ph-x text-xl"></i></button>
+            </div>
             
-            // Update UI Nav
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            const activeNav = document.getElementById(`nav-${viewId}`);
-            if(activeNav) activeNav.classList.add('active');
-
-            // Render View
-            const mainContent = document.getElementById('main-content');
-            mainContent.innerHTML = ''; // Clear current
-            
-            // Scroll to top
-            mainContent.scrollTop = 0;
-
-            switch(viewId) {
-                case 'dashboard': renderDashboard(mainContent); break;
-                case 'strategy': renderStrategy(mainContent); break;
-                case 'architecture': renderArchitecture(mainContent); break;
-                case 'execution': renderExecution(mainContent); break;
-                case 'safety': renderSafety(mainContent); break;
-            }
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // --- View Renderers ---
-
-        function renderDashboard(container) {
-            // Header
-            const header = document.createElement('div');
-            header.className = "mb-8 fade-in";
-            header.innerHTML = `
-                <h2 class="text-3xl font-serif font-bold text-slate-800 mb-2">Mission Control</h2>
-                <p class="text-slate-600 max-w-3xl">Delivering the most contextually intelligent, culturally aware, and trustworthy e-commerce AI in Africa. GOODEALS Genius elevates every interaction from discovery to decision.</p>
-            `;
-            container.appendChild(header);
-
-            // North Star Metrics Grid
-            const metricsGrid = document.createElement('div');
-            metricsGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8 fade-in";
-            
-            reportData.northStars.forEach((metric, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-6 rounded-xl shadow-sm border border-stone-100 hover:shadow-md transition-shadow";
-                card.innerHTML = `
-                    <p class="text-xs font-semibold text-brand-orange uppercase tracking-wider mb-1">${metric.label}</p>
-                    <div class="text-3xl font-bold text-slate-800 mb-1 flex items-baseline">
-                        <span id="counter-${index}">0</span>${metric.suffix}
+            <form id="add-course-form" onsubmit="app.handleAddCourse(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Course Title</label>
+                    <input type="text" name="title" required placeholder="e.g. Google Cloud ML Engineer" class="input-field w-full rounded-lg px-4 py-3">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Platform/Source</label>
+                        <input type="text" name="platform" placeholder="Coursera, Udemy..." class="input-field w-full rounded-lg px-4 py-3">
                     </div>
-                    <p class="text-xs text-slate-500 leading-tight">${metric.desc}</p>
-                `;
-                metricsGrid.appendChild(card);
-            });
-            container.appendChild(metricsGrid);
-
-            // Charts Section
-            const chartsSection = document.createElement('div');
-            chartsSection.className = "grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 fade-in";
-            
-            // Chart 1: Project Health / Readiness
-            const readinessContainer = document.createElement('div');
-            readinessContainer.className = "bg-white p-6 rounded-xl shadow-sm border border-stone-100 lg:col-span-1";
-            readinessContainer.innerHTML = `
-                <h3 class="font-bold text-lg mb-4 text-slate-800">Go/No-Go Readiness</h3>
-                <div class="chart-container relative">
-                    <canvas id="readinessChart"></canvas>
-                    <div class="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
-                        <span class="text-3xl font-bold text-emerald-600">100%</span>
-                        <span class="text-xs text-slate-500">Ready for GA</span>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Duration (Hours)</label>
+                        <input type="number" name="duration" placeholder="e.g. 40" class="input-field w-full rounded-lg px-4 py-3">
                     </div>
                 </div>
-                <ul class="mt-4 space-y-2 text-sm text-slate-600">
-                    ${reportData.readiness.items.map(item => `<li class="flex items-center gap-2"><span class="text-emerald-500">✅</span> ${item}</li>`).join('')}
-                </ul>
-            `;
-            chartsSection.appendChild(readinessContainer);
 
-            // Info Block: Integration Overview
-            const integrationInfo = document.createElement('div');
-            integrationInfo.className = "bg-brand-dark text-white p-6 rounded-xl shadow-sm lg:col-span-2 flex flex-col justify-center";
-            integrationInfo.innerHTML = `
-                <h3 class="font-bold text-xl mb-4 font-serif">Integration & Escalation Channels</h3>
+                <div class="bg-indigo-900/20 border border-indigo-500/30 rounded-xl p-4">
+                    <h3 class="text-indigo-400 font-semibold mb-3 flex items-center gap-2">
+                        <i class="ph-fill ph-target"></i> Your Commitment
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Daily Goal (Mins)</label>
+                            <input type="number" name="dailyGoal" value="60" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">End Date Goal</label>
+                            <input type="date" name="endDate" class="input-field w-full rounded-lg px-3 py-2 text-sm">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Why are you learning this?</label>
+                        <textarea name="pledge" rows="2" placeholder="I commit to finish this because..." class="input-field w-full rounded-lg px-3 py-2 text-sm"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-lg shadow-lg mt-4">Start Journey</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Daily Log Modal -->
+    <div id="log-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="log-title">
+        <div class="glass-panel w-full max-w-2xl rounded-2xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 id="log-title" class="text-2xl font-display font-bold text-white">Daily Learning Log</h2>
+                    <p class="text-slate-400 text-sm" id="log-course-name">Course Name</p>
+                </div>
+                <button onclick="app.hideModal('log-modal')" class="text-slate-400 hover:text-white"><i class="ph-bold ph-x text-xl"></i></button>
+            </div>
+            
+            <form id="log-form" onsubmit="app.handleSaveLog(event)" class="space-y-6">
+                <input type="hidden" name="courseId" id="log-course-id">
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">What did you learn today?</label>
+                    <textarea name="learned" required rows="3" class="input-field w-full rounded-xl px-4 py-3" placeholder="Key concepts, new syntax, architectural patterns..."></textarea>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h4 class="text-brand-orange font-semibold text-sm mb-2 uppercase">Core Integrations</h4>
-                        <ul class="space-y-2 text-sm text-slate-300">
-                            <li>• <strong>Event Bus:</strong> User interactions, purchases, support logs.</li>
-                            <li>• <strong>Product Service:</strong> Nightly attribute batch sync.</li>
-                            <li>• <strong>Auth:</strong> Role-based context (Buyer, Vendor, etc).</li>
-                            <li>• <strong>Orders:</strong> Scoped retrieval for context.</li>
-                        </ul>
+                        <label class="block text-sm font-medium text-red-400 mb-2">The Challenge</label>
+                        <textarea name="challenge" rows="3" class="input-field w-full rounded-xl px-4 py-3 bg-red-900/10 border-red-900/30 focus:border-red-500" placeholder="What blocked you? Error messages, confusing concepts..."></textarea>
                     </div>
                     <div>
-                        <h4 class="text-brand-orange font-semibold text-sm mb-2 uppercase">Support Escalation</h4>
-                        <ul class="space-y-2 text-sm text-slate-300">
-                            <li class="flex items-center gap-2"><span class="bg-white/10 p-1 rounded">📞</span> +234-01-800-GDEALS</li>
-                            <li class="flex items-center gap-2"><span class="bg-white/10 p-1 rounded">✉️</span> support@goodeals.africa</li>
-                            <li class="mt-2 text-xs border-t border-slate-700 pt-2"><strong>SLA:</strong> < 4 business hours initial human follow-up.</li>
-                        </ul>
+                        <label class="block text-sm font-medium text-emerald-400 mb-2">The Solution</label>
+                        <textarea name="solution" rows="3" class="input-field w-full rounded-xl px-4 py-3 bg-emerald-900/10 border-emerald-900/30 focus:border-emerald-500" placeholder="How did you fix it? Resources used, logic applied..."></textarea>
                     </div>
                 </div>
-            `;
-            chartsSection.appendChild(integrationInfo);
 
-            container.appendChild(chartsSection);
-
-            // Initialize interactions after DOM mount
-            requestAnimationFrame(() => {
-                animateCounters();
-                initReadinessChart();
-            });
-        }
-
-        function renderStrategy(container) {
-            container.innerHTML = `
-                <div class="mb-6 fade-in">
-                    <h2 class="text-3xl font-serif font-bold text-slate-800 mb-2">Strategic Outcomes</h2>
-                    <p class="text-slate-600">AI capabilities tailored to specific ecosystem roles to drive network effects.</p>
+                <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl">
+                    <label class="text-sm font-medium text-slate-300">Time Spent:</label>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="app.adjustTime(-15)" class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-white">-</button>
+                        <input type="number" name="timeSpent" id="log-time-spent" value="60" class="w-16 text-center bg-transparent text-white font-bold text-lg border-none focus:ring-0">
+                        <span class="text-slate-500 text-sm">mins</span>
+                        <button type="button" onclick="app.adjustTime(15)" class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-white">+</button>
+                    </div>
+                    <div class="flex-1"></div>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="milestone" class="w-5 h-5 rounded border-slate-600 text-indigo-600 focus:ring-indigo-500 bg-slate-700">
+                        <span class="text-sm text-yellow-400 font-medium hidden md:inline">Major Milestone?</span>
+                        <span class="text-sm text-yellow-400 font-medium md:hidden">Milestone?</span>
+                    </label>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-in">
-                    ${reportData.roles.map(role => `
-                        <div class="bg-white p-6 rounded-xl border-l-4 border-brand-orange shadow-sm hover:shadow-lg transition-all group cursor-default">
-                            <div class="flex justify-between items-start mb-4">
-                                <div class="bg-orange-50 w-12 h-12 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                                    ${role.icon}
-                                </div>
-                                <span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold uppercase">${role.title}</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">${role.outcome}</h3>
-                            <p class="text-slate-600 leading-relaxed">${role.details}</p>
+
+                <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-lg shadow-lg">Save Log Entry</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div id="cert-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="cert-title">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 text-center">
+            <div class="w-16 h-16 bg-yellow-500/20 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="ph-fill ph-medal text-3xl"></i>
+            </div>
+            <h2 id="cert-title" class="text-2xl font-bold text-white mb-2">Congratulations!</h2>
+            <p class="text-slate-400 mb-6">Attach your certificate for <span id="cert-course-name" class="text-white font-semibold"></span></p>
+            
+            <form onsubmit="app.handleCertUpload(event)">
+                <input type="hidden" id="cert-course-id">
+                <div class="border-2 border-dashed border-slate-600 rounded-xl p-8 mb-4 hover:border-indigo-500 hover:bg-slate-800/50 transition-all cursor-pointer relative">
+                    <input type="file" id="cert-file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required accept="image/jpeg,image/png,image/webp,application/pdf">
+                    <i class="ph-duotone ph-file-arrow-up text-4xl text-slate-500 mb-2"></i>
+                    <p class="text-sm text-slate-400">Click to upload image/PDF (Max 500KB)</p>
+                </div>
+                <p id="cert-error" class="text-red-400 text-xs mb-4 hidden"></p>
+                <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold">Save Certificate</button>
+            </form>
+        </div>
+    </div>
+
+    <script defer>
+        // --- Quotes Database ---
+        const QUOTES = [
+            "Learning is not a spectator sport.",
+            "The expert in anything was once a beginner.",
+            "Consistency is the code to success.",
+            "Small progress is still progress.",
+            "Don't practice until you get it right. Practice until you can't get it wrong."
+        ];
+
+        const app = {
+            data: {
+                courses: [],
+                profile: {
+                    name: 'Learner',
+                    streak: 0,
+                    lastLogDate: null // Stored as ISO Date String (YYYY-MM-DD)
+                }
+            },
+            
+            // --- CORE LIFECYCLE ---
+
+            init() {
+                this.loadData();
+                this.render('dashboard');
+                this.updateStreakDisplay();
+                // Check if streak is broken on init
+                this.checkStreakIntegrity();
+            },
+
+            loadData() {
+                try {
+                    const stored = localStorage.getItem('kingLearnData');
+                    if (stored) {
+                        this.data = JSON.parse(stored);
+                        // Data migration safety check: ensure courses have logs array
+                        this.data.courses.forEach(c => {
+                            if (!c.logs) c.logs = [];
+                        });
+                    }
+                } catch (e) {
+                    console.error("Data load error", e);
+                    this.notify("Failed to load previous data.", "error");
+                }
+            },
+
+            saveData() {
+                try {
+                    localStorage.setItem('kingLearnData', JSON.stringify(this.data));
+                    this.updateStreakDisplay();
+                } catch (e) {
+                    if (e.name === 'QuotaExceededError') {
+                        this.notify("Storage full! Delete old courses or certificates.", "error");
+                    } else {
+                        console.error("Save error", e);
+                    }
+                }
+            },
+
+            // --- NAVIGATION ---
+
+            navigate(view) {
+                // Update Nav UI
+                document.querySelectorAll('.nav-btn, .nav-btn-mobile').forEach(btn => {
+                    const isTarget = btn.dataset.target === view;
+                    btn.classList.toggle('text-white', isTarget);
+                    btn.classList.toggle('bg-slate-800', isTarget && window.innerWidth >= 768); // Desktop active bg
+                    
+                    // Mobile specific
+                    if (window.innerWidth < 768) {
+                        btn.classList.toggle('text-indigo-400', isTarget);
+                        btn.classList.toggle('text-slate-500', !isTarget);
+                    } else {
+                         btn.classList.toggle('text-slate-400', !isTarget);
+                    }
+                });
+
+                this.render(view);
+            },
+
+            // --- RENDERERS ---
+
+            render(view) {
+                const container = document.getElementById('main-view');
+                container.innerHTML = '';
+                container.classList.remove('fade-in');
+                void container.offsetWidth; // Trigger reflow
+                container.classList.add('fade-in');
+
+                if (view === 'dashboard') this.renderDashboard(container);
+                else if (view === 'courses') this.renderCourses(container);
+                else if (view === 'analytics') this.renderAnalytics(container); // FIXED: Function now exists
+                else if (view.startsWith('course-')) this.renderCourseDetail(container, view.split('-')[1]);
+            },
+
+            renderDashboard(container) {
+                const activeCourses = this.data.courses.filter(c => c.status === 'active');
+                const completed = this.data.courses.filter(c => c.status === 'completed').length;
+                const totalMins = this.data.courses.reduce((acc, c) => acc + (c.logs || []).reduce((lAcc, l) => lAcc + l.timeSpent, 0), 0);
+                const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+
+                container.innerHTML = `
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-display font-bold text-white mb-2">Welcome back, King.</h2>
+                        <p class="text-slate-400 italic">"${randomQuote}"</p>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="glass-panel p-4 rounded-xl">
+                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Active Courses</p>
+                            <p class="text-3xl font-bold text-white">${activeCourses.length}</p>
                         </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function renderArchitecture(container) {
-            container.innerHTML = `
-                <div class="mb-6 fade-in">
-                    <h2 class="text-3xl font-serif font-bold text-slate-800 mb-2">System Architecture</h2>
-                    <p class="text-slate-600">A modular, safe, and observable stack designed for high-concurrency e-commerce.</p>
-                </div>
-
-                <!-- Backend Pillars -->
-                <div class="mb-10 fade-in">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-slate-200 text-slate-700 w-6 h-6 rounded flex items-center justify-center text-xs">BE</span>
-                        Backend Implementation Pillars
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        ${reportData.backendPillars.map(pillar => `
-                            <div class="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-                                <h4 class="font-bold text-brand-orange mb-2">${pillar.title}</h4>
-                                <p class="text-sm text-slate-600">${pillar.desc}</p>
-                            </div>
-                        `).join('')}
+                        <div class="glass-panel p-4 rounded-xl">
+                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Completed</p>
+                            <p class="text-3xl font-bold text-emerald-400">${completed}</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl">
+                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Hours Invested</p>
+                            <p class="text-3xl font-bold text-indigo-400">${(totalMins/60).toFixed(1)}</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl">
+                            <p class="text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Streak</p>
+                            <p class="text-3xl font-bold text-orange-400">${this.data.profile.streak} <span class="text-sm text-slate-500 font-normal">Days</span></p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Frontend Principles -->
-                <div class="fade-in">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-slate-200 text-slate-700 w-6 h-6 rounded flex items-center justify-center text-xs">FE</span>
-                        Frontend UX Principles
-                    </h3>
-                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-stone-100">
-                            ${reportData.uxPrinciples.map(principle => `
-                                <div class="p-6 text-center hover:bg-stone-50 transition-colors">
-                                    <h4 class="font-bold text-slate-800 mb-2">${principle.title}</h4>
-                                    <p class="text-xs text-slate-500">${principle.desc}</p>
+                    <!-- Active Section -->
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-white">Active Campaigns</h3>
+                        <button onclick="app.navigate('courses')" class="text-sm text-indigo-400 hover:text-indigo-300">View All</button>
+                    </div>
+
+                    ${activeCourses.length === 0 ? `
+                        <div class="text-center py-12 border-2 border-dashed border-slate-700 rounded-2xl bg-slate-900/50">
+                            <i class="ph-duotone ph-student text-4xl text-slate-600 mb-3"></i>
+                            <p class="text-slate-400 mb-4">No active conquests. Time to expand your empire.</p>
+                            <button onclick="app.showModal('add-course-modal')" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors">Start a Course</button>
+                        </div>
+                    ` : `
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${activeCourses.map(course => this.createCourseCard(course)).join('')}
+                        </div>
+                    `}
+                `;
+            },
+
+            renderAnalytics(container) {
+                // Prepare Data
+                const logs = this.data.courses.flatMap(c => c.logs || []);
+                
+                // Chart 1: Last 7 Days Activity
+                const last7Days = [];
+                const last7DaysLabels = [];
+                for(let i=6; i>=0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const dayStr = d.toLocaleDateString(); // Localized format for comparison logic might differ, but display is fine
+                    // Comparison logic: match ISO string Date part
+                    const isoDate = d.toISOString().split('T')[0];
+                    
+                    const dayLogs = logs.filter(l => l.date.startsWith(isoDate));
+                    const mins = dayLogs.reduce((sum, l) => sum + l.timeSpent, 0);
+                    
+                    last7Days.push(mins);
+                    last7DaysLabels.push(d.toLocaleDateString('en-US', {weekday: 'short'}));
+                }
+
+                // Chart 2: Time by Platform
+                const platformMap = {};
+                this.data.courses.forEach(c => {
+                    const cMins = (c.logs || []).reduce((sum, l) => sum + l.timeSpent, 0);
+                    if(cMins > 0) {
+                        platformMap[c.platform] = (platformMap[c.platform] || 0) + cMins;
+                    }
+                });
+
+                container.innerHTML = `
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-display font-bold text-white mb-2">Empire Analytics</h2>
+                        <p class="text-slate-400">Visualizing your growth vector.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="glass-panel p-6 rounded-2xl">
+                            <h3 class="text-white font-bold mb-4">Momentum (Last 7 Days)</h3>
+                            <div class="chart-container">
+                                <canvas id="chart-momentum"></canvas>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl">
+                            <h3 class="text-white font-bold mb-4">Time by Platform</h3>
+                             <div class="chart-container">
+                                <canvas id="chart-platform"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Render Charts
+                setTimeout(() => {
+                    // Bar Chart
+                    new Chart(document.getElementById('chart-momentum'), {
+                        type: 'bar',
+                        data: {
+                            labels: last7DaysLabels,
+                            datasets: [{
+                                label: 'Minutes',
+                                data: last7Days,
+                                backgroundColor: '#6366f1',
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8'} },
+                                x: { grid: { display: false }, ticks: { color: '#94a3b8'} }
+                            }
+                        }
+                    });
+
+                    // Doughnut Chart
+                    new Chart(document.getElementById('chart-platform'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: Object.keys(platformMap),
+                            datasets: [{
+                                data: Object.values(platformMap),
+                                backgroundColor: ['#FFD700', '#6366f1', '#10b981', '#f97316', '#ef4444'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { 
+                                legend: { position: 'right', labels: { color: '#cbd5e1' } } 
+                            }
+                        }
+                    });
+                }, 100);
+            },
+
+            createCourseCard(course) {
+                const totalSpent = (course.logs || []).reduce((acc, log) => acc + log.timeSpent, 0);
+                const lastLog = course.logs && course.logs.length > 0 ? course.logs[0] : null;
+                
+                return `
+                    <div class="glass-panel p-5 rounded-2xl hover:border-indigo-500/50 transition-all cursor-pointer group relative overflow-hidden flex flex-col h-full" onclick="app.navigate('course-${course.id}')">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-xs font-bold text-indigo-400 bg-indigo-900/30 px-2 py-1 rounded uppercase tracking-wide">${course.platform}</span>
+                            ${course.status === 'completed' ? '<i class="ph-fill ph-check-circle text-emerald-500 text-xl"></i>' : ''}
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-1 group-hover:text-indigo-300 transition-colors line-clamp-1">${course.title}</h4>
+                        <p class="text-slate-500 text-sm mb-4 line-clamp-2 italic flex-1">"${course.pledge || 'No pledge set.'}"</p>
+                        
+                        <div class="space-y-3 mt-auto">
+                            <div class="flex justify-between text-xs text-slate-400 border-t border-slate-700 pt-3">
+                                <span>${course.logs ? course.logs.length : 0} Logs</span>
+                                <span>${(totalSpent/60).toFixed(1)}h Spent</span>
+                            </div>
+                            ${lastLog ? `
+                                <div class="bg-slate-800/50 p-2 rounded text-xs border border-slate-700/50">
+                                    <span class="text-slate-500">Last:</span> <span class="text-slate-300 line-clamp-1">${lastLog.learned}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderCourseDetail(container, courseId) {
+                const course = this.data.courses.find(c => c.id === parseInt(courseId));
+                if (!course) return this.render('dashboard');
+
+                const totalSpent = (course.logs || []).reduce((acc, log) => acc + log.timeSpent, 0);
+
+                container.innerHTML = `
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                        <div>
+                            <button onclick="app.navigate('courses')" class="text-slate-400 hover:text-white text-sm flex items-center gap-1 mb-2">
+                                <i class="ph-bold ph-arrow-left"></i> Back
+                            </button>
+                            <h1 class="text-2xl md:text-3xl font-display font-bold text-white break-words">${course.title}</h1>
+                            <p class="text-indigo-400 text-sm font-medium uppercase tracking-widest mt-1">${course.platform} • ${(totalSpent/60).toFixed(1)} Hours Logged</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            ${course.status !== 'completed' ? `
+                                <button onclick="app.openLogModal(${course.id})" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold shadow-lg shadow-indigo-900/20 flex items-center gap-2">
+                                    <i class="ph-bold ph-pencil-simple"></i> Log
+                                </button>
+                                <button onclick="app.completeCourse(${course.id})" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-medium border border-slate-600">
+                                    <i class="ph-bold ph-check"></i> Finish
+                                </button>
+                            ` : `
+                                <div class="px-6 py-3 bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 rounded-xl font-bold flex items-center gap-2">
+                                    <i class="ph-fill ph-medal"></i> Completed
+                                </div>
+                            `}
+                            <button onclick="app.deleteCourse(${course.id})" class="px-3 py-3 bg-red-900/20 hover:bg-red-900/40 text-red-400 rounded-xl border border-red-900/30" title="Delete Course">
+                                <i class="ph-bold ph-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Layout Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Main: Logs -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                <i class="ph-duotone ph-notebook"></i> Learning Log
+                            </h3>
+                            
+                            ${(!course.logs || course.logs.length === 0) ? `
+                                <div class="glass-panel p-8 rounded-2xl text-center border-dashed border-slate-700">
+                                    <p class="text-slate-400">No logs yet. Start your streak today.</p>
+                                </div>
+                            ` : course.logs.map(log => `
+                                <div class="glass-panel p-6 rounded-2xl relative ${log.milestone ? 'border-l-4 border-l-yellow-500' : ''}">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-mono text-slate-500">${new Date(log.date).toLocaleDateString()}</span>
+                                            ${log.milestone ? '<span class="text-xs bg-yellow-500/20 text-yellow-500 px-2 py-0.5 rounded font-bold uppercase">Milestone</span>' : ''}
+                                        </div>
+                                        <span class="text-xs font-bold text-slate-600 bg-slate-900 px-2 py-1 rounded">${log.timeSpent}m</span>
+                                    </div>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide mb-1">Learned</h4>
+                                            <p class="text-slate-200 leading-relaxed whitespace-pre-wrap">${log.learned}</p>
+                                        </div>
+                                        ${log.challenge ? `
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-red-400 uppercase mb-1 flex items-center gap-1"><i class="ph-bold ph-warning"></i> Challenge</h5>
+                                                    <p class="text-sm text-slate-300 whitespace-pre-wrap">${log.challenge}</p>
+                                                </div>
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-emerald-400 uppercase mb-1 flex items-center gap-1"><i class="ph-bold ph-lightbulb"></i> Solution</h5>
+                                                    <p class="text-sm text-slate-300 whitespace-pre-wrap">${log.solution}</p>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
-                    </div>
-                </div>
 
-                <!-- Module Structure Visual -->
-                <div class="mt-10 fade-in">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">Module Structure</h3>
-                    <div class="bg-slate-900 text-slate-300 p-6 rounded-xl font-mono text-sm overflow-x-auto shadow-inner">
-<pre>src/ai/
-  ├── ai.module.ts             # Core Module
-  ├── services/
-  │   ├── ai.service.ts        # Facade Orchestrator
-  │   ├── provider-registry.ts # Extensibility Layer
-  │   └── inference/           # Gemini Client Wrapper
-  └── dto/                     # Strict Validation Layer
-      ├── support-chat.dto.ts
-      └── product-discovery.dto.ts</pre>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderExecution(container) {
-            container.innerHTML = `
-                <div class="mb-6 fade-in">
-                    <h2 class="text-3xl font-serif font-bold text-slate-800 mb-2">Execution Roadmap</h2>
-                    <p class="text-slate-600">Phased rollout strategy ensuring stability and performance.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8 fade-in">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="font-bold text-lg text-slate-800">Waves & Sprints Timeline</h3>
-                        <div class="flex gap-4 text-sm">
-                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-slate-700"></span> Backend (Waves)</span>
-                            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-brand-orange"></span> Frontend (Sprints)</span>
-                        </div>
-                    </div>
-                    <div class="chart-container" style="height: 400px;">
-                        <canvas id="roadmapChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in">
-                    <!-- Rollback Strategy -->
-                    <div class="bg-red-50 p-6 rounded-xl border border-red-100">
-                        <h3 class="font-bold text-red-800 mb-3 flex items-center gap-2">⚠️ Rollback Strategy</h3>
-                        <ul class="list-disc list-inside space-y-2 text-sm text-red-700">
-                            <li><strong>Feature Flags:</strong> Individual capability toggles.</li>
-                            <li><strong>Blue/Green Deploy:</strong> <code class="bg-white px-1 rounded">AI_STACK_VERSION</code> env var switching.</li>
-                            <li><strong>Severe Issue:</strong> Immediate purge of in-flight tasks and human escalation.</li>
-                        </ul>
-                    </div>
-                    <!-- Definition of Done -->
-                    <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
-                        <h3 class="font-bold text-emerald-800 mb-3 flex items-center gap-2">✅ Definition of Done</h3>
-                        <ul class="list-disc list-inside space-y-2 text-sm text-emerald-700">
-                            <li><strong>Latency:</strong> p95 goal met per capability.</li>
-                            <li><strong>Security:</strong> Secrets not logged, permissions passed.</li>
-                            <li><strong>Observability:</strong> Metrics & logs visible in dashboard.</li>
-                            <li><strong>Docs:</strong> Internal runbook updated.</li>
-                        </ul>
-                    </div>
-                </div>
-            `;
-            
-            requestAnimationFrame(initRoadmapChart);
-        }
-
-        function renderSafety(container) {
-            container.innerHTML = `
-                <div class="mb-6 fade-in">
-                    <h2 class="text-3xl font-serif font-bold text-slate-800 mb-2">Safety & Alignment</h2>
-                    <p class="text-slate-600">Ensuring factual precision, cultural relevance, and user safety.</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in">
-                    <!-- Prompt Framework -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="font-bold text-lg text-slate-800 mb-4">Prompt Engineering Framework</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center">
-                                <div class="w-32 text-xs font-bold text-slate-500 uppercase">System Layer</div>
-                                <div class="flex-1 bg-slate-100 p-2 rounded text-sm border-l-4 border-slate-500">Enforce role, safety, 5 Cs</div>
+                        <!-- Sidebar: Info & Certificate -->
+                        <div class="space-y-6">
+                            <!-- Commitment Card -->
+                            <div class="glass-panel p-6 rounded-2xl border-t-4 border-t-indigo-500">
+                                <h3 class="font-bold text-white mb-4">The Pledge</h3>
+                                <p class="text-slate-400 italic text-sm mb-4">"${course.pledge}"</p>
+                                <div class="flex justify-between items-center text-sm border-t border-slate-700 pt-4">
+                                    <span class="text-slate-500">Daily Goal</span>
+                                    <span class="text-white font-mono">${course.dailyGoal}m</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm mt-2">
+                                    <span class="text-slate-500">Target End</span>
+                                    <span class="text-white font-mono">${course.endDate || 'N/A'}</span>
+                                </div>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-32 text-xs font-bold text-brand-orange uppercase">Context Layer</div>
-                                <div class="flex-1 bg-orange-50 p-2 rounded text-sm border-l-4 border-brand-orange">Inject vetted knowledge snippets</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-32 text-xs font-bold text-blue-500 uppercase">Personalization</div>
-                                <div class="flex-1 bg-blue-50 p-2 rounded text-sm border-l-4 border-blue-500">Reflect user preferences succinctly</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-32 text-xs font-bold text-emerald-500 uppercase">Output Guard</div>
-                                <div class="flex-1 bg-emerald-50 p-2 rounded text-sm border-l-4 border-emerald-500">Format & JSON constraints</div>
+
+                            <!-- Certificate Card -->
+                            <div class="glass-panel p-6 rounded-2xl">
+                                <h3 class="font-bold text-white mb-4 flex items-center gap-2">
+                                    <i class="ph-fill ph-certificate"></i> Certificate
+                                </h3>
+                                ${course.certificate ? `
+                                    <div class="bg-slate-900 p-2 rounded-xl mb-3 relative group">
+                                        <img src="${course.certificate}" class="w-full rounded-lg opacity-90 hover:opacity-100 transition-opacity cursor-pointer" onclick="app.showImage('${course.certificate}')">
+                                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                            <i class="ph-bold ph-magnifying-glass-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-lg"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-center text-emerald-400 text-sm font-bold flex items-center justify-center gap-1">
+                                        <i class="ph-bold ph-check-circle"></i> Earned
+                                    </p>
+                                    <button onclick="app.removeCertificate(${course.id})" class="text-xs text-red-400 hover:text-red-300 w-full mt-2">Remove Certificate</button>
+                                ` : `
+                                    <div class="border-2 border-dashed border-slate-700 rounded-xl p-6 text-center">
+                                        <i class="ph-duotone ph-lock-key text-3xl text-slate-600 mb-2"></i>
+                                        <p class="text-slate-500 text-sm">Complete the course to upload your certificate.</p>
+                                    </div>
+                                `}
                             </div>
                         </div>
                     </div>
+                `;
+            },
 
-                    <!-- Incident Response -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="font-bold text-lg text-slate-800 mb-4">Incident Response Pyramid</h3>
-                        <div class="flex flex-col gap-2">
-                            <div class="bg-red-100 p-4 rounded text-center border border-red-200">
-                                <h4 class="font-bold text-red-800">Sev 1: Critical</h4>
-                                <p class="text-xs text-red-700">Regulatory violation / unsafe advice. <br><strong>Action:</strong> Immediately disable capability.</p>
-                            </div>
-                            <div class="bg-orange-100 p-4 rounded text-center border border-orange-200 mx-4">
-                                <h4 class="font-bold text-orange-800">Sev 2: Systemic</h4>
-                                <p class="text-xs text-orange-700">Hallucinations > 5%. <br><strong>Action:</strong> Patch prompt & hotfix.</p>
-                            </div>
-                            <div class="bg-blue-100 p-4 rounded text-center border border-blue-200 mx-8">
-                                <h4 class="font-bold text-blue-800">Sev 3: Isolated</h4>
-                                <p class="text-xs text-blue-700">Retrieval gap. <br><strong>Action:</strong> Add document & reindex.</p>
-                            </div>
-                        </div>
+            renderCourses(container) {
+                container.innerHTML = `
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-display font-bold text-white">Your Library</h2>
                     </div>
-                </div>
-
-                <!-- Behavioral North Star -->
-                <div class="mt-8 bg-brand-dark text-white p-8 rounded-xl shadow-lg fade-in">
-                    <h3 class="font-serif font-bold text-xl mb-4 text-brand-orange">Behavioral North Star</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-bold mb-2">Identity</h4>
-                            <p class="text-slate-300 text-sm">"GOODEALS Genius" – an expert commerce guide & support concierge. Professional, empowering, concise, and culturally respectful.</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold mb-2 text-red-400">Strictly Forbidden</h4>
-                            <p class="text-slate-300 text-sm">Fabricating policies, speculative financial claims, unverifiable medical advice, or disclosing private vendor metrics.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // --- Interaction Helpers ---
-
-        function animateCounters() {
-            reportData.northStars.forEach((metric, index) => {
-                const el = document.getElementById(`counter-${index}`);
-                if (!el) return;
-                
-                let start = 0;
-                const end = metric.value;
-                const duration = 1500;
-                const startTime = performance.now();
-
-                function update(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
                     
-                    // EaseOutQuart
-                    const ease = 1 - Math.pow(1 - progress, 4);
-                    
-                    const current = Math.floor(start + (end - start) * ease);
-                    el.innerText = current > 0 ? `+${current}` : current;
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${this.data.courses.map(c => this.createCourseCard(c)).join('')}
+                    </div>
+                    ${this.data.courses.length === 0 ? '<p class="text-slate-500 italic">No courses found.</p>' : ''}
+                `;
+            },
 
-                    if (progress < 1) {
-                        requestAnimationFrame(update);
+            // --- LOGIC / ACTIONS ---
+
+            showModal(id) {
+                document.getElementById(id).classList.remove('hidden');
+            },
+
+            hideModal(id) {
+                document.getElementById(id).classList.add('hidden');
+                // Reset errors
+                const err = document.getElementById('cert-error');
+                if(err) err.classList.add('hidden');
+            },
+
+            notify(msg, type = 'success') {
+                Toastify({
+                    text: msg,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: type === 'error' ? "#ef4444" : "#10b981",
+                        borderRadius: "8px"
+                    }
+                }).showToast();
+            },
+
+            handleAddCourse(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                
+                const newCourse = {
+                    id: Date.now(),
+                    title: formData.get('title'),
+                    platform: formData.get('platform'),
+                    duration: formData.get('duration'),
+                    dailyGoal: parseInt(formData.get('dailyGoal')),
+                    endDate: formData.get('endDate'),
+                    pledge: formData.get('pledge'),
+                    status: 'active',
+                    progress: 0,
+                    startDate: new Date().toISOString(),
+                    logs: [],
+                    certificate: null
+                };
+
+                this.data.courses.unshift(newCourse);
+                this.saveData();
+                this.hideModal('add-course-modal');
+                e.target.reset();
+                this.navigate('course-' + newCourse.id);
+                this.notify("New campaign started!");
+            },
+
+            openLogModal(courseId) {
+                const course = this.data.courses.find(c => c.id === courseId);
+                document.getElementById('log-course-id').value = courseId;
+                document.getElementById('log-course-name').innerText = course.title;
+                this.showModal('log-modal');
+            },
+
+            adjustTime(amount) {
+                const input = document.getElementById('log-time-spent');
+                input.value = Math.max(0, parseInt(input.value) + amount);
+            },
+
+            handleSaveLog(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const courseId = parseInt(formData.get('courseId'));
+                const course = this.data.courses.find(c => c.id === courseId);
+
+                const newLog = {
+                    id: Date.now(),
+                    date: new Date().toISOString(),
+                    learned: formData.get('learned'),
+                    challenge: formData.get('challenge'),
+                    solution: formData.get('solution'),
+                    timeSpent: parseInt(formData.get('timeSpent')),
+                    milestone: formData.get('milestone') === 'on'
+                };
+
+                if (!course.logs) course.logs = [];
+                course.logs.unshift(newLog);
+                
+                this.updateStreak();
+                this.saveData();
+                this.hideModal('log-modal');
+                e.target.reset();
+                this.renderCourseDetail(document.getElementById('main-view'), courseId.toString());
+                this.notify("Log saved. Keep going!");
+            },
+
+            updateStreak() {
+                // Streak Logic (Normalized to YYYY-MM-DD)
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+                
+                // If last log was yesterday, increment. If today, do nothing. Else, reset.
+                if (this.data.profile.lastLogDate !== today) {
+                    const yesterdayDate = new Date();
+                    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                    const yesterday = yesterdayDate.toISOString().split('T')[0];
+
+                    if (this.data.profile.lastLogDate === yesterday) {
+                        this.data.profile.streak++;
                     } else {
-                        el.innerText = end > 0 ? `+${end}` : end;
+                        // Reset if broken
+                        this.data.profile.streak = 1;
                     }
+                    this.data.profile.lastLogDate = today;
                 }
-                requestAnimationFrame(update);
-            });
-        }
+            },
 
-        // --- Chart Configurations ---
+            checkStreakIntegrity() {
+                // Run on init to check if streak was broken while away
+                if (!this.data.profile.lastLogDate) return;
+                
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+                const yesterdayDate = new Date();
+                yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                const yesterday = yesterdayDate.toISOString().split('T')[0];
 
-        function initReadinessChart() {
-            const ctx = document.getElementById('readinessChart');
-            if(!ctx) return;
+                // If last log was older than yesterday, and not today, streak is broken.
+                if (this.data.profile.lastLogDate !== today && this.data.profile.lastLogDate !== yesterday) {
+                    this.data.profile.streak = 0;
+                    this.updateStreakDisplay();
+                }
+            },
 
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Ready', 'Pending'],
-                    datasets: [{
-                        data: [reportData.readiness.pass, reportData.readiness.total - reportData.readiness.pass],
-                        backgroundColor: ['#10b981', '#e2e8f0'], // Emerald-500, Slate-200
-                        borderWidth: 0,
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '75%',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
+            completeCourse(courseId) {
+                if(!confirm("Mark course as completed? This is a great achievement.")) return;
+                const course = this.data.courses.find(c => c.id === courseId);
+                course.status = 'completed';
+                course.endDateActual = new Date().toISOString();
+                this.saveData();
+                
+                document.getElementById('cert-course-id').value = courseId;
+                document.getElementById('cert-course-name').innerText = course.title;
+                this.showModal('cert-modal');
+                this.renderCourseDetail(document.getElementById('main-view'), courseId.toString());
+                this.notify("Course Completed! 👑");
+            },
+
+            deleteCourse(courseId) {
+                if(!confirm("Are you sure? This will delete all logs and data for this course forever.")) return;
+                this.data.courses = this.data.courses.filter(c => c.id !== courseId);
+                this.saveData();
+                this.navigate('dashboard');
+                this.notify("Course deleted.", "error");
+            },
+
+            handleCertUpload(e) {
+                e.preventDefault();
+                const courseId = parseInt(document.getElementById('cert-course-id').value);
+                const fileInput = document.getElementById('cert-file');
+                const file = fileInput.files[0];
+                const errorMsg = document.getElementById('cert-error');
+
+                if (file) {
+                    // 1. Size Validation (500KB limit for localStorage safety)
+                    if (file.size > 500 * 1024) {
+                        errorMsg.innerText = "File too large! Max 500KB (LocalStorage limit). Please compress it.";
+                        errorMsg.classList.remove('hidden');
+                        return;
                     }
+
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const course = this.data.courses.find(c => c.id === courseId);
+                        try {
+                            // Try saving to verify quota
+                            course.certificate = evt.target.result; 
+                            this.saveData();
+                            this.hideModal('cert-modal');
+                            this.renderCourseDetail(document.getElementById('main-view'), courseId.toString());
+                            this.notify("Certificate Uploaded!");
+                        } catch(err) {
+                            course.certificate = null; // Revert
+                            errorMsg.innerText = "Storage full. Cannot save image.";
+                            errorMsg.classList.remove('hidden');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+
+            removeCertificate(courseId) {
+                if(!confirm("Remove this certificate?")) return;
+                const course = this.data.courses.find(c => c.id === courseId);
+                course.certificate = null;
+                this.saveData();
+                this.renderCourseDetail(document.getElementById('main-view'), courseId.toString());
+            },
+
+            showImage(src) {
+                // Simple full screen view
+                const w = window.open("");
+                w.document.write(`<img src="${src}" style="max-width:100%; height:auto;">`);
+            },
+
+            updateStreakDisplay() {
+                document.getElementById('streak-display').innerText = `${this.data.profile.streak} Day Streak`;
+            }
+        };
+
+            // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            // Accessibility: Close modals with Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    ['add-course-modal', 'log-modal', 'cert-modal'].forEach(id => document.getElementById(id).classList.add('hidden'));
                 }
             });
-        }
-
-        function initRoadmapChart() {
-            const ctx = document.getElementById('roadmapChart');
-            if(!ctx) return;
-
-            // Prepare data for Gantt-like bar chart
-            // Chart.js floating bars: [start, end]
-            
-            const backendData = reportData.roadmap.backend.map(item => ({
-                x: [item.start, item.start + item.duration],
-                y: item.name
-            }));
-            
-            const frontendData = reportData.roadmap.frontend.map(item => ({
-                x: [item.start, item.start + item.duration],
-                y: item.name
-            }));
-
-            // All labels combined for Y axis
-            const labels = [...reportData.roadmap.backend.map(i => i.name), ...reportData.roadmap.frontend.map(i => i.name)];
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Backend Waves',
-                            data: backendData,
-                            backgroundColor: '#1e293b', // Slate-800
-                            borderRadius: 4,
-                            barPercentage: 0.6
-                        },
-                        {
-                            label: 'Frontend Sprints',
-                            data: frontendData,
-                            backgroundColor: '#f97316', // Orange-500
-                            borderRadius: 4,
-                            barPercentage: 0.6
-                        }
-                    ]
-                },
-                options: {
-                    indexAxis: 'y', // Horizontal bars
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            min: 0,
-                            max: 10,
-                            title: { display: true, text: 'Timeline (Weeks)' },
-                            grid: { color: '#f1f5f9' }
-                        },
-                        y: {
-                            grid: { display: false }
-                        }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const raw = context.raw;
-                                    const duration = raw.x[1] - raw.x[0];
-                                    return `Duration: ${duration} week${duration > 1 ? 's' : ''}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Start
-        init();
+            app.init();
+        });
 
     </script>
 </body>
